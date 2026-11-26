@@ -35,7 +35,7 @@ class PageController extends Controller
     {
         return view('pengelolaan', [
             'username' => Auth::user()->username,
-            'projects' => Proyek::all(),
+            'projects' => Proyek::with('kategori')->get(),
         ]);
     }
 
