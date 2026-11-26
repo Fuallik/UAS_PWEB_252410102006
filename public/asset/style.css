@@ -585,3 +585,111 @@ body.dark-mode nav li button {
 body.dark-mode nav li button:hover {
     color: #dcf04a;
 }
+
+/* Form tambah dan edit */
+.form-card {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: white;
+    border: 2px solid #3d3e35;
+    border-radius: 12px;
+}
+
+.form-card label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.form-card input,
+.form-card select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #7a7a7a;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.form-card button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3d3e35;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.form-card button:hover {
+    background-color: #cfe334;
+    color: black;
+}
+
+.kembali {
+    display: block;
+    text-align: center;
+    margin-top: 12px;
+    color: inherit;
+}
+
+/* Tombol dan pesan sukses */
+.tombol {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #3d3e35;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+}
+
+.tombol:hover {
+    background-color: #cfe334;
+    color: black;
+}
+
+.tombol-hapus {
+    background-color: #b33a3a;
+}
+
+.form-hapus {
+    display: inline;
+}
+
+.aksi-atas {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.sukses {
+    max-width: 1000px;
+    margin: 0 auto 20px auto;
+    padding: 10px;
+    text-align: center;
+    background-color: #e3f5e3;
+    color: #1e5e1e;
+    border-radius: 8px;
+}
+
+/* Dark mode */
+body.dark-mode .form-card {
+    background-color: #2a2a2a;
+    border-color: #444;
+}
+
+body.dark-mode .form-card input,
+body.dark-mode .form-card select {
+    background-color: #1e1e1e;
+    color: #e1e8ed;
+    border-color: #444;
+}
+
+body.dark-mode .sukses {
+    background-color: #1f3a1f;
+    color: #b6e6b6;
+}

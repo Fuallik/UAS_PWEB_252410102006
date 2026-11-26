@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
@@ -12,9 +13,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [PageController::class, 'profile'])->name('profile');
     Route::get('/pengelolaan', [PageController::class, 'pengelolaan'])->name('pengelolaan');
-});
 
-// route sementara untuk uji middleware
-Route::get('/tes-admin', function () {
-    return 'Halo admin, kamu lolos middleware role.';
-})->middleware(['auth', 'role:admin']);
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('kategori', KategoriController::class)->except('show');
+    });
+});

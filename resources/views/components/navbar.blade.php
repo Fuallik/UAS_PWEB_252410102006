@@ -18,6 +18,9 @@
                 @auth
                     <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                     <li><a href="{{ route('pengelolaan') }}">Pengelolaan</a></li>
+                    @if (auth()->user()->isAdmin())
+                        <li><a href="{{ route('kategori.index') }}">Kategori</a></li>
+                    @endif
                     <li><a href="{{ route('profile') }}">Profile</a></li>
                     <li>
                         <form method="POST" action="{{ route('logout') }}">
