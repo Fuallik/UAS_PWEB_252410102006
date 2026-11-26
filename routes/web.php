@@ -13,3 +13,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [PageController::class, 'profile'])->name('profile');
     Route::get('/pengelolaan', [PageController::class, 'pengelolaan'])->name('pengelolaan');
 });
+
+// route sementara untuk uji middleware
+Route::get('/tes-admin', function () {
+    return 'Halo admin, kamu lolos middleware role.';
+})->middleware(['auth', 'role:admin']);
