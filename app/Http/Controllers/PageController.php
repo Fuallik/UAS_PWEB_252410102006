@@ -41,11 +41,8 @@ class PageController extends Controller
 
     public function profile()
     {
-        $user = Auth::user();
-
         return view('profile', [
-            'username' => $user->username,
-            'role' => $user->role,
+            'user' => Auth::user(),
             'biodata' => $this->biodata,
             'skills' => $this->skills,
             'kontak' => $this->kontak,

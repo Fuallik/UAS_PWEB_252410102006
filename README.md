@@ -1,113 +1,97 @@
-# Website Portofolio - UTS Pemrograman Web
-
-Tugas UTS mata kuliah Pemrograman Web.
+# Portofolio Web - UAS Pemrograman Web
 
 - Nama: Mohamad Fauzi Febrianto
 - NIM: 252410102006
-- Program Studi: Teknologi Informasi
-- Fakultas: Ilmu Komputer, Universitas Jember
+- Prodi: Teknologi Informasi
+- Fakultas: Fakultas Ilmu Komputer
 
-## Tentang Website
+## Tentang proyek
 
-Website portofolio sederhana yang saya buat pakai Laravel dengan Blade dan pola MVC. Isinya halaman login, dashboard, profile, dan pengelolaan portofolio.
+Ini website portofolio untuk tugas UAS Praktikum Pemrograman Web. Saya lanjutkan dari proyek UTS. Bedanya, sekarang datanya disimpan di database MySQL dan ada dua role, yaitu admin dan user.
 
-Website ini tidak memakai database. Biodata, skill, kontak, dan daftar proyek disimpan sebagai array di `PageController`, lalu dikirim ke view.
+Dibuat dengan Laravel dan Blade.
 
-## Fitur
+## Yang bisa dilakukan
 
-- **Login**: username tidak boleh kosong dan harus terdaftar. Kalau salah, muncul pesan error.
-- **Dashboard**: sapaan sesuai username, serta jumlah proyek dan skill.
-- **Profile**: biodata, skill, dan kontak.
-- **Pengelolaan**: tabel proyek yang datanya dari controller dan ditampilkan dengan `@foreach`.
-- **Dark mode**: tombol di pojok kanan bawah, pilihan tema tersimpan di browser.
-- **Responsif**: tampilan menyesuaikan layar HP. Di layar kecil ada hamburger menu setelah login.
+- **Admin:** mengelola kategori dan proyek (tambah, edit, hapus).
+- **User:** hanya bisa melihat daftar proyek.
+- Login dan logout, dark mode, dan tampilan yang menyesuaikan layar HP.
 
-## Username Login
+## Akun untuk mencoba
 
-```
-fauzi
-```
+| Role  | Username | Password   |
+| ----- | -------- | ---------- |
+| Admin | `admin`  | `admin123` |
+| User  | `fauzi`  | `fauzi123` |
 
-Hanya username ini yang diterima. Tidak ada password.
+## Pembatasan akses
 
-## Alur Data
+Semua halaman di dalam aplikasi dijaga middleware `auth`, jadi harus login dulu. Halaman kategori dan fitur tambah, edit, hapus proyek dijaga middleware `role:admin` (kode ada di `CheckUserRole`). Kalau user biasa membukanya, yang muncul halaman 403.
 
-1. Username diisi di form login (method POST).
-2. `authenticate()` di `PageController` mengecek username, lalu redirect ke dashboard dengan parameter `?username=...`.
-3. Dashboard, profile, dan pengelolaan membaca parameter itu dengan `$request->query('username')`.
-4. Link di navbar membawa username yang sama ke halaman lain.
-5. Kalau parameter username tidak ada, pengguna dikembalikan ke halaman login.
+## Database
 
-## Struktur File Utama
+Ada tiga tabel: `users`, `kategoris`, dan `proyeks`. Satu kategori bisa punya banyak proyek, jadi tabel `proyeks` punya kolom `kategori_id` yang mengarah ke `kategoris`.
 
-```
-routes/web.php
-app/Http/Controllers/PageController.php
-resources/views/
-├── layouts/app.blade.php
-├── partials/head.blade.php
-├── components/
-│   ├── navbar.blade.php
-│   └── footer.blade.php
-├── login.blade.php
-├── dashboard.blade.php
-├── profile.blade.php
-└── pengelolaan.blade.php
-public/asset/        (CSS, JS, dan gambar)
-```
+## Cara menjalankan
 
-## Cara Menjalankan
-
-Butuh PHP 8.3 atau lebih baru dan Composer.
+Siapkan PHP 8.3 ke atas, Composer, dan MySQL yang sudah menyala.
 
 ```powershell
 composer install
-Copy-Item .env.example .env
+cp .env.example .env
 php artisan key:generate
+php artisan migrate --seed
 php artisan serve
 ```
 
-Lalu buka http://localhost:8000 dan login dengan username `fauzi`.
+Kalau ditanya apakah database `uas_pweb` mau dibuat, jawab `yes`. Kalau MySQL kamu memakai password, isi `DB_PASSWORD` di file `.env`. Setelah itu buka http://localhost:8000.
 
 ## Screenshot
 
-### Login
+**Login**
 
-| | Light | Dark |
-|---|---|---|
-| PC | <img src="docs/Login%20pc%20light.png" width="380" alt="Login PC light"> | <img src="docs/Login%20pc%20dark.png" width="380" alt="Login PC dark"> |
-| HP | <img src="docs/Login%20hp%20light.png" width="170" alt="Login HP light"> | <img src="docs/Login%20hp%20dark.png" width="170" alt="Login HP dark"> |
+<img src="docs/login.png" width="700" alt="Halaman login">
 
-### Login dengan Username Salah
+**Dashboard (admin)**
 
-| | Light | Dark |
-|---|---|---|
-| PC | <img src="docs/Login%20salah%20pc%20light.png" width="380" alt="Login salah PC light"> | <img src="docs/Login%20salah%20pc%20dark.png" width="380" alt="Login salah PC dark"> |
-| HP | <img src="docs/Login%20salah%20hp%20light.png" width="170" alt="Login salah HP light"> | <img src="docs/Login%20salah%20hp%20dark.png" width="170" alt="Login salah HP dark"> |
+<img src="docs/dashboard-admin.png" width="700" alt="Dashboard admin">
 
-### Dashboard
+**Dashboard (user)**
 
-| | Light | Dark |
-|---|---|---|
-| PC | <img src="docs/Dasboard%20pc%20light.png" width="380" alt="Dashboard PC light"> | <img src="docs/Dasboard%20pc%20dark.png" width="380" alt="Dashboard PC dark"> |
-| HP | <img src="docs/Dashboard%20hp%20light.png" width="170" alt="Dashboard HP light"> | <img src="docs/Dashboard%20hp%20dark.png" width="170" alt="Dashboard HP dark"> |
+<img src="docs/dashboard-user.png" width="700" alt="Dashboard user">
 
-### Hamburger Menu (HP)
+**Pengelolaan proyek (admin)**
 
-| Light | Dark |
-|---|---|
-| <img src="docs/Hamburger%20hp%20light.png" width="170" alt="Hamburger HP light"> | <img src="docs/Hamburger%20hp%20dark.png" width="170" alt="Hamburger HP dark"> |
+<img src="docs/pengelolaan-admin.png" width="700" alt="Pengelolaan proyek oleh admin">
 
-### Profile
+**Tambah proyek**
 
-| | Light | Dark |
-|---|---|---|
-| PC | <img src="docs/Profile%20pc%20light.png" width="380" alt="Profile PC light"> | <img src="docs/Profile%20pc%20dark.png" width="380" alt="Profile PC dark"> |
-| HP | <img src="docs/Profile%20hp%20light.png" width="170" alt="Profile HP light"> | <img src="docs/Profile%20hp%20dark.png" width="170" alt="Profile HP dark"> |
+<img src="docs/proyek-tambah.png" width="700" alt="Form tambah proyek">
 
-### Pengelolaan
+**Edit proyek**
 
-| | Light | Dark |
-|---|---|---|
-| PC | <img src="docs/Pengelolaan%20pc%20light.png" width="380" alt="Pengelolaan PC light"> | <img src="docs/Pengelolaan%20pc%20dark.png" width="380" alt="Pengelolaan PC dark"> |
-| HP | <img src="docs/Pengelolaan%20hp%20light.png" width="170" alt="Pengelolaan HP light"> | <img src="docs/Pengelolaan%20hp%20dark.png" width="170" alt="Pengelolaan HP dark"> |
+<img src="docs/proyek-edit.png" width="700" alt="Form edit proyek">
+
+**Daftar kategori (admin)**
+
+<img src="docs/kategori-daftar.png" width="700" alt="Daftar kategori">
+
+**Tambah kategori**
+
+<img src="docs/kategori-tambah.png" width="700" alt="Form tambah kategori">
+
+**Edit kategori**
+
+<img src="docs/kategori-edit.png" width="700" alt="Form edit kategori">
+
+**Pengelolaan proyek (user, hanya bisa melihat)**
+
+<img src="docs/pengelolaan-user.png" width="700" alt="Pengelolaan proyek oleh user">
+
+**User membuka halaman admin (403)**
+
+<img src="docs/akses-ditolak.png" width="700" alt="Halaman 403">
+
+**Profile**
+
+<img src="docs/profile.png" width="700" alt="Halaman profile">
