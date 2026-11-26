@@ -6,7 +6,7 @@
     <p>Selamat datang, {{ $username }}</p>
     <div class="skill-container">
         <article class="skill-item"><h3>{{ $totalProyek }}</h3><p>Proyek</p></article>
-        <article class="skill-item"><h3>{{ $totalSkill }}</h3><p>Skill</p></article>
+        <article class="skill-item"><h3>{{ $totalKategori }}</h3><p>Kategori</p></article>
     </div>
 </section>
 @endsection

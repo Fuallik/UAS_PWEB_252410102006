@@ -7,6 +7,7 @@
         <img src="{{ asset('asset/profil.jpg') }}" alt="{{ $biodata['Nama'] }}">
         <ul>
             <li>Login sebagai : {{ $username }}</li>
+            <li>Role : {{ $role }}</li>
             @foreach ($biodata as $label => $nilai)
                 <li>{{ $label }} : {{ $nilai }}</li>
             @endforeach

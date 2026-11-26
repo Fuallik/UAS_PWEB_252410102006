@@ -1,27 +1,31 @@
-@props(['username' => null])
 <header>
     <nav>
         <div class="navbar">
             <div class="profil">
-                <a href="{{ $username ? route('dashboard', ['username' => $username]) : route('login') }}">
+                <a href="{{ auth()->check() ? route('dashboard') : route('login') }}">
                     <h1>Mohamad Fauzi Febrianto</h1>
                     <p>Mahasiswa Teknologi Informasi</p>
                 </a>
             </div>
 
-            @if ($username)
-    <div class="hamburger" id="hamburger-menu">
-        <img src="{{ asset('asset/menu.png') }}" id="icon-hamburger" alt="Menu" width="30">
-    </div>
-@endif
+            @auth
+                <div class="hamburger" id="hamburger-menu">
+                    <img src="{{ asset('asset/menu.png') }}" id="icon-hamburger" alt="Menu" width="30">
+                </div>
+            @endauth
 
             <ul id="nav-list">
-                @if ($username)
-                    <li><a href="{{ route('dashboard', ['username' => $username]) }}">Dashboard</a></li>
-                    <li><a href="{{ route('pengelolaan', ['username' => $username]) }}">Pengelolaan</a></li>
-                    <li><a href="{{ route('profile', ['username' => $username]) }}">Profile</a></li>
-                    <li><a href="{{ route('login') }}">Logout</a></li>
-                @endif
+                @auth
+                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                    <li><a href="{{ route('pengelolaan') }}">Pengelolaan</a></li>
+                    <li><a href="{{ route('profile') }}">Profile</a></li>
+                    <li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
+                @endauth
             </ul>
         </div>
     </nav>

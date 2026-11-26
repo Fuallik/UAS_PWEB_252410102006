@@ -5,7 +5,7 @@
     <title>@yield('title') | Portofolio Fauzi</title>
 </head>
 <body>
-    <x-navbar :username="$username ?? null" />
+    <x-navbar />
 
     <main>
         @yield('content')

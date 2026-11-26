@@ -7,8 +7,16 @@
         @csrf
         <label for="username">Username</label>
         <input type="text" id="username" name="username" value="{{ old('username') }}" required>
-        <small>Username: fauzi</small>
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+
         @error('username') <p class="error">{{ $message }}</p> @enderror
+        @error('password') <p class="error">{{ $message }}</p> @enderror
+
+        <small>Admin: admin / admin123</small><br>
+        <small>User: fauzi / fauzi123</small>
+
         <button type="submit">Masuk</button>
     </form>
 </section>

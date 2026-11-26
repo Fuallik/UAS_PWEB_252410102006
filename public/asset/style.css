@@ -557,3 +557,31 @@ body.dark-mode td {
 body.dark-mode th {
     background-color: #1e1e1e;
 }
+
+/* Tombol logout di navbar */
+nav li form {
+    margin: 0;
+}
+
+nav li button {
+    padding: 10px 15px;
+    color: rgb(0, 0, 0);
+    background: none;
+    border: none;
+    font: inherit;
+    cursor: pointer;
+    border-radius: 10%;
+    transition: all 0.5s ease;
+}
+
+nav li button:hover {
+    color: #dcf04a;
+}
+
+body.dark-mode nav li button {
+    color: #e1e8ed;
+}
+
+body.dark-mode nav li button:hover {
+    color: #dcf04a;
+}

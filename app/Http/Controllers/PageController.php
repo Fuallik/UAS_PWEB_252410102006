@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Kategori;
+use App\Models\Proyek;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
     private array $biodata = [
-        'Nama'     => 'Mohamad Fauzi Febrianto',
-        'NIM'      => '252410102006',
+        'Nama' => 'Mohamad Fauzi Febrianto',
+        'NIM' => '252410102006',
         'Fakultas' => 'Ilmu Komputer',
-        'Prodi'    => 'Teknologi Informasi',
+        'Prodi' => 'Teknologi Informasi',
     ];
 
     private array $skills = ['Python', 'HTML', 'CSS', 'C#'];
@@ -20,74 +22,33 @@ class PageController extends Controller
         ['label' => 'Email', 'teks' => 'fauzifebrianto2@gmail.com', 'url' => 'mailto:fauzifebrianto2@gmail.com'],
     ];
 
-    private array $projects = [
-        ['judul' => 'Project PBO', 'teknologi' => 'C#', 'tahun' => 2026, 'status' => 'Selesai', 'gambar' => 'asset/projek1.png'],
-        ['judul' => 'Project GB Point Blank', 'teknologi' => 'HTML & CSS', 'tahun' => 2026, 'status' => 'Selesai', 'gambar' => 'asset/projek2.png'],
-        ['judul' => 'Project MP3 To FLAC', 'teknologi' => 'Python', 'tahun' => 2026, 'status' => 'Selesai', 'gambar' => 'asset/projek3.png'],
-        ['judul' => 'tes', 'teknologi' => 'c++', 'tahun' => 2026, 'status' => 'Selesai', 'gambar' => 'asset/projek3.png']
-    ];
-
-    public function login()
+    public function dashboard()
     {
-        return view('login', ['username' => null]);
-    }
-
-    public function authenticate(Request $request)
-    {
-        $data = $request->validate([
-            'username' => 'required|string|max:50',
-        ]);
-
-        $daftar = ['fauzi'];
-
-        if (! in_array(strtolower($data['username']), $daftar)) {
-            return back()
-                ->withErrors(['username' => 'Username tidak terdaftar'])
-                ->withInput();
-        }
-
-        return redirect()->route('dashboard', ['username' => $data['username']]);
-    }
-
-    public function dashboard(Request $request)
-    {
-        $username = $request->query('username');
-        if (! $username) {
-            return redirect()->route('login');
-        }
-
         return view('dashboard', [
-            'username'    => $username,
-            'totalProyek' => count($this->projects),
-            'totalSkill'  => count($this->skills),
+            'username' => Auth::user()->username,
+            'totalProyek' => Proyek::count(),
+            'totalKategori' => Kategori::count(),
         ]);
     }
 
-    public function pengelolaan(Request $request)
+    public function pengelolaan()
     {
-        $username = $request->query('username');
-        if (! $username) {
-            return redirect()->route('login');
-        }
-
         return view('pengelolaan', [
-            'username' => $username,
-            'projects' => $this->projects,
+            'username' => Auth::user()->username,
+            'projects' => Proyek::all(),
         ]);
     }
 
-    public function profile(Request $request)
+    public function profile()
     {
-        $username = $request->query('username');
-        if (! $username) {
-            return redirect()->route('login');
-        }
+        $user = Auth::user();
 
         return view('profile', [
-            'username' => $username,
-            'biodata'  => $this->biodata,
-            'skills'   => $this->skills,
-            'kontak'   => $this->kontak,
+            'username' => $user->username,
+            'role' => $user->role,
+            'biodata' => $this->biodata,
+            'skills' => $this->skills,
+            'kontak' => $this->kontak,
         ]);
     }
 }
